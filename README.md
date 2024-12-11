@@ -15,3 +15,11 @@ john --wordlist=<wordlist_file> --rules <hash_file> :- e.g. john --wordlist=rock
         Note :- --rule, this will generate password list based on the in built rules. Like adding appending numbers, capitalizing letters and adding special characters.
 
 3) Incremental Mode :- Will read the hashes in the specified hash file and then generate all possible combinations of characters, starting with a single character and incrementing with each iteration. 
+
+
+
+======================================================================================================================================================================
+
+We can use John to convert any type of file into the hash and crack the password. 
+
+We can check the #locate *2john*
