@@ -22,4 +22,24 @@ john --wordlist=<wordlist_file> --rules <hash_file> :- e.g. john --wordlist=rock
 
 We can use John to convert any type of file into the hash and crack the password. 
 
-We can check the #locate *2john*
+We can check the #locate *2john* to find what files we can convert it to 
+
+locate *2john*
+
+/usr/bin/bitlocker2john
+/usr/bin/dmg2john
+/usr/bin/gpg2john
+/usr/bin/hccap2john
+/usr/bin/keepass2john
+/usr/bin/putty2john
+/usr/bin/racf2john
+/usr/bin/rar2john
+/usr/bin/uaf2john
+/usr/bin/vncpcap2john
+/usr/bin/wlanhcx2john
+/usr/bin/wpapcap2john
+/usr/bin/zip2john
+/usr/share/john/1password2john.py
+/usr/share/john/7z2john.pl
+/usr/share/john/DPAPImk2john.py
+/usr/share/john/adxcsouf2john.py
