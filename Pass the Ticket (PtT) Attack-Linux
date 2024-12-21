@@ -44,7 +44,7 @@ Step 3) umarkhan@inlanefreight.htb@linux01:~$ klist {We would have escalated to 
         
 ====================================================================================================================
 
-We can extract the keytab with Python script. After this we can crack the password and login as that user. 
+We can extract the hash with Python script. After this we can crack the password and login as that user. 
 
 umarkhan@linux01:~$ python3 /opt/keytabextract.py /opt/specialfiles/carlos.keytab 
 
